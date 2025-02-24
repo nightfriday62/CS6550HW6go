@@ -72,12 +72,16 @@ func main() {
 	// GET /count -> returns row count in "test_table"
 	r.GET("/count", func(c *gin.Context) {
 		var cnt int
-		row := db.QueryRow("SELECT COUNT(*) FROM test_table")
+		row := db.QueryRow("SELECT COUNT(*) FROM album")
 		if err := row.Scan(&cnt); err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 		c.JSON(200, gin.H{"row_count": cnt})
+	})
+
+	r.GET("/clear", func(c *gin.Context) {
+		db.QueryRow("DELETE FROM album")
 	})
 
 	r.GET("/album/:albumId", func(c *gin.Context) {

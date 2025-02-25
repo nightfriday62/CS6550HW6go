@@ -43,7 +43,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to open DB: %v", err)
 	}
-
+	db.SetMaxOpenConns(80)
 	// Test the DB connection quickly
 	err = db.Ping()
 	if err != nil {
